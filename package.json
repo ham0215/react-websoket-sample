@@ -1,0 +1,11 @@
+{
+  "name": "react-websoket-sample",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ham0215/react-websoket-sample.git",
+  "author": "ham",
+  "license": "MIT",
+  "devDependencies": {
+    "create-react-app": "^3.3.0"
+  }
+}
