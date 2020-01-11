@@ -2,13 +2,27 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+const users = {};
+
 io.on('connection', socket => {
   console.log('a user connected');
   socket.broadcast.emit('hi');
 
   socket.on('sendMessage', (msg) => {
-    console.log(`message: ${msg}`);
-    io.emit('receiveMessage', { msg });
+    console.log(`message: ${msg.name} ${msg.msg}`);
+    io.emit('receiveMessage', msg);
+  });
+
+  socket.on('join', (name) => {
+    console.log(`joined: ${name}`);
+    io.emit('joined', `joined ${name}`);
+    users[socket.id] = name;
+  });
+
+  socket.on('disconnect', e => {
+    console.log('disconnected');
+    io.emit('left', users[socket.id]);
+    delete users[socket.id];
   });
 });
 
